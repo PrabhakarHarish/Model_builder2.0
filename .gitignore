@@ -1,0 +1,10 @@
+.venv/
+.idea/
+__pycache__/
+.pytest_cache/
+*.pyc
+*.save
+trace.zip
+playwright-report/
+test-results/
+.env
