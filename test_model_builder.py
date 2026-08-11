@@ -85,3 +85,49 @@ async def test_tc10_verify_toolbar_controls(model_builder_page):
 async def test_tc11_verify_sheet_navigation(model_builder_page):
     await model_builder_page.verify_sheet_navigation()
     print("TC11 completed")
+
+@pytest.mark.asyncio
+async def test_tc08_verify_save_model_dialog(model_builder_page):
+    await model_builder_page.verify_save_model_dialog()
+    print("TC12 Completed")
+
+@pytest.mark.asyncio
+async def test_tc09_verify_save_as_template_dialog(model_builder_page):
+    await model_builder_page.verify_save_template_dialog()
+    print("TC13 Completed")
+
+@pytest.mark.asyncio
+async def test_tc10_verify_load_model_dialog(model_builder_page):
+    await model_builder_page.verify_load_model_dialog()
+    print("TC14 Completed")
+
+@pytest.mark.asyncio
+async def test_tc11_verify_load_input_set_dialog(model_builder_page):
+    await model_builder_page.verify_load_input_set_dialog()
+    print("TC15 Completed")
+
+@pytest.mark.asyncio
+async def test_tc12_verify_save_input_set_dialog(model_builder_page):
+    await model_builder_page.verify_save_input_set_dialog()
+    print("TC16 Completed")
+
+
+@pytest.mark.asyncio
+async def test_tc13_verify_reset_button_dialog(model_builder_page):
+    await model_builder_page.verify_reset_button_dialog()
+    print("TC17 Completed")
+
+@pytest.mark.asyncio
+async def test_tc11_verify_toggle_buttons(model_builder_page):
+    await model_builder_page.verify_toggle_buttons()
+    print("TC18 completed")
+
+@pytest.mark.asyncio
+async def test_tc12_verify_show_formulas_button(model_builder_page):
+    await model_builder_page.verify_show_formulas_button()
+    print("TC19 completed")
+
+@pytest.mark.asyncio
+async def test_tc13_verify_column_num_button(model_builder_page):
+    await model_builder_page.verify_column_num_button()
+    print("TC20 completed")

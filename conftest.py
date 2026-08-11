@@ -6,14 +6,14 @@ from login_page import LoginPage
 async def page():
     async with async_playwright() as p:
 
-        browser = await p.chromium.launch(headless=False,slow_mo=300)
+        browser = await p.chromium.launch(headless=False,slow_mo=1000)
         context = await browser.new_context(ignore_https_errors=True)
         page = await context.new_page()
 
         page.set_default_timeout(60000)
         page.set_default_navigation_timeout(60000)
 
-        # The login is happening only once in this scenario
+        # The login is happening only once in all the scenarios.
         login_page = LoginPage(page)
         await login_page.open_login_page()
 

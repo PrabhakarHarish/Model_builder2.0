@@ -15,6 +15,24 @@ class ModelBuilderPage:
         self.recalculate = page.get_by_text("Recalculate",exact=True)
         self.verify_button = page.get_by_text("Verify",exact=True)
         self.show_formulas = page.get_by_text("Show Formulas",exact=True)
+        self.save_model_button = page.get_by_title("Save model to backend",exact=True)
+        self.save_as_template_button = page.get_by_title("Convert model to reusable template",exact=True)
+        self.load_model_button = page.get_by_title("Load model from backend",exact=True)
+        self.load_input_set_button=page.get_by_title("Load input set (scenario snapshot)",exact=True)
+        self.save_input_set_button=page.get_by_title("Save input set (scenario snapshot)",exact=True)
+        self.load_file_button=page.get_by_title("Load model from JSON or import from Excel",exact=True)
+        self.export_model_button=page.get_by_title("Export semantic model as JSON",exact=True)
+        self.reset_button_dialog=page.get_by_title("Reset to home screen (clears model and DB data, keeps company selection)", exact=True)
+        self.integrity_guard = page.get_by_test_id("toolbar-save-validation-toggle")
+        self.autosave = page.get_by_test_id("toolbar-autosave-toggle")
+        self.split_view = page.get_by_test_id("datasource-split-view-toggle")
+        self.hide_model_options = page.locator('button.toolbar-collapse-btn:has-text("Hide Model Options")')
+        self.show_model_options = page.locator('button.toolbar-collapse-btn:has-text("Show Model Options")')
+        self.show_formulas=page.get_by_test_id("toolbar-show-formulas")
+        self.column_num=page.get_by_test_id("toolbar-columns")
+
+### Below are the defining of the methods that is in the __init__ method.
+### added several print statements so that it shows us the completion of the TC and moving to the next testcase.
 
     async def select_tcs_company(self):
         await self.company_input.wait_for(state="visible")
@@ -116,3 +134,94 @@ class ModelBuilderPage:
 
             print(f"{sheet} selected")
         print("All sheets navigated successfully and returned to PNL")
+
+    async def click_button_and_cancel_dialog(self, button):
+
+        await button.click()
+        print("Button clicked successfully")
+
+        cancel_button = self.page.get_by_role("button",name="Cancel",exact=True)
+        await cancel_button.wait_for(state="visible")
+        print("Cancel button is visible")
+        await cancel_button.click()
+        print("Cancel button clicked successfully")
+
+    async def verify_save_model_dialog(self):
+        await self.click_button_and_cancel_dialog(self.save_model_button)
+
+    async def verify_save_template_dialog(self):
+        await self.click_button_and_cancel_dialog(self.save_as_template_button)
+
+    async def verify_load_model_dialog(self):
+        await self.click_button_and_cancel_dialog(self.load_model_button)
+
+    async def verify_load_input_set_dialog(self):
+        await self.click_button_and_cancel_dialog(self.load_input_set_button)
+
+    async def verify_save_input_set_dialog(self):
+        await self.click_button_and_cancel_dialog(self.save_input_set_button)
+
+    async def verify_reset_button_dialog(self):
+        await self.click_button_and_cancel_dialog(self.reset_button_dialog)
+        print("Reset button clicked")
+
+    async def verify_toggle_buttons(self):
+        await self.integrity_guard.wait_for(state="visible")
+        await self.integrity_guard.click()
+        print("Integrity Guard toggled OFF")
+
+        await self.integrity_guard.click()
+        print("Integrity Guard toggled ON")
+
+        await self.autosave.wait_for(state="visible")
+        await self.autosave.click()
+        print("Autosave toggled OFF")
+
+        await self.autosave.click()
+        print("Autosave toggled ON")
+
+        await self.split_view.wait_for(state="visible")
+        await self.split_view.click()
+        print("Split View toggled ON")
+
+        await self.split_view.click()
+        print("Split View toggled OFF")
+
+        await self.hide_model_options.wait_for(state="visible")
+        await self.hide_model_options.click()
+        print("Model Options hidden")
+
+        await self.show_model_options.wait_for(state="visible")
+        await self.show_model_options.click()
+        print("Model Options shown")
+
+        print("All toggle controls verification completed")
+
+
+    async def verify_show_formulas_button(self):
+        await self.show_formulas.wait_for(state="visible")
+        await self.show_formulas.click()
+        print("Show Formulas button clicked")
+
+        await self.show_formulas.click()
+        print("Show Formulas button clicked again to toggle off")
+
+        print("Show Formulas button verification completed")
+
+    async def verify_column_num_button(self):
+        await self.column_num.wait_for(state="visible")
+        await self.column_num.click()
+        print("Manage Columns button clicked")
+
+        # Assuming there is a close button or some way to close the column management dialog
+        close_button = self.page.get_by_role("button", name="Close", exact=True)
+        await close_button.wait_for(state="visible")
+        await close_button.click()
+        print("Manage Columns dialog closed")
+
+        print("Manage Columns button verification completed")
+
+
+
+
+
