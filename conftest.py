@@ -10,6 +10,8 @@ async def page():
         context = await browser.new_context(ignore_https_errors=True)
         page = await context.new_page()
 
+        await page.set_viewport_size({"width": 1920, "height": 1080})
+
         page.set_default_timeout(60000)
         page.set_default_navigation_timeout(60000)
 

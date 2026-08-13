@@ -5,11 +5,17 @@ class ModelBuilderPage:
 
     def __init__(self, page: Page):
         self.page = page
+
+        # Entering the company details and selecting the model is done in the open_tcs_model method.
+        # The following are the locators for the elements on the Model Builder page.
         self.company_input = page.get_by_placeholder("Search or select company...")
         self.company_option = page.get_by_text("Tata Consultancy Services Ltd.",exact=True)
         self.load_existing_model_button = page.get_by_test_id("toolbar-load-existing-model")
         self.show_public_models = page.locator("#load_public")
         self.existing_model = page.get_by_text("Model2",exact=True)
+
+        # The following are the locators for the toolbar controls on the model builder page.
+
         self.sheet_button = page.get_by_text("Sheet",exact=True)
         self.sheet_dropdown = page.get_by_test_id("toolbar-sheet-select")
         self.recalculate = page.get_by_text("Recalculate",exact=True)
@@ -23,6 +29,9 @@ class ModelBuilderPage:
         self.load_file_button=page.get_by_title("Load model from JSON or import from Excel",exact=True)
         self.export_model_button=page.get_by_title("Export semantic model as JSON",exact=True)
         self.reset_button_dialog=page.get_by_title("Reset to home screen (clears model and DB data, keeps company selection)", exact=True)
+
+        #the following are the locators for the toggle buttons on the model builder page.
+
         self.integrity_guard = page.get_by_test_id("toolbar-save-validation-toggle")
         self.autosave = page.get_by_test_id("toolbar-autosave-toggle")
         self.split_view = page.get_by_test_id("datasource-split-view-toggle")
@@ -30,9 +39,23 @@ class ModelBuilderPage:
         self.show_model_options = page.locator('button.toolbar-collapse-btn:has-text("Show Model Options")')
         self.show_formulas=page.get_by_test_id("toolbar-show-formulas")
         self.column_num=page.get_by_test_id("toolbar-columns")
+        self.rows_num=page.get_by_test_id("toolbar-rows")
 
-### Below are the defining of the methods that is in the __init__ method.
-### added several print statements so that it shows us the completion of the TC and moving to the next testcase.
+        # selecting the decimal dropdown menu in the toolbar section of the model builder page.
+        self.decimal_dropdown = page.get_by_title("Set decimal places for all numbers")
+
+        # the following are the locators for the creation of new sheet in the model builder page and perform other operation in the same section.
+        # more importantly, not automated the internal data of the model builder page so currently validting the TCS Model builder page and its controls.
+
+        self.sheet_button = page.get_by_text("Sheet", exact=True)
+        self.sheet_name = page.locator("#sheetName")
+        self.copy_structure_dropdown = page.locator("#sourceSheet")
+        self.create_sheet_button = page.get_by_text("Create Sheet",exact=True)
+
+
+
+    #Below are the defining of the methods that is in the __init__ method.
+    # added several print statements so that it shows us the completion of the TC and moving to the next testcase.
 
     async def select_tcs_company(self):
         await self.company_input.wait_for(state="visible")
@@ -209,19 +232,58 @@ class ModelBuilderPage:
         print("Show Formulas button verification completed")
 
     async def verify_column_num_button(self):
-        await self.column_num.wait_for(state="visible")
-        await self.column_num.click()
-        print("Manage Columns button clicked")
-
-        # Assuming there is a close button or some way to close the column management dialog
-        close_button = self.page.get_by_role("button", name="Close", exact=True)
-        await close_button.wait_for(state="visible")
-        await close_button.click()
-        print("Manage Columns dialog closed")
-
-        print("Manage Columns button verification completed")
+        await self.click_button_and_cancel_dialog(self.column_num)
+        print("Column Number button verification completed")
 
 
+    async def verify_rows_num_button(self):
+        await self.click_button_and_cancel_dialog(self.rows_num)
+        print("Rows Number button verification completed")
 
+    async def verify_decimal_dropdown(self):
+            await self.decimal_dropdown.wait_for(state="visible")
+
+            await self.decimal_dropdown.select_option(label="0 decimals")
+            print("0 decimals selected")
+
+            await self.decimal_dropdown.select_option(label="1 decimal")
+            print("1 decimal selected")
+
+            await self.decimal_dropdown.select_option(label="2 decimals")
+            print("2 decimals selected")
+
+            await self.decimal_dropdown.select_option(label="3 decimals")
+            print("3 decimals selected")
+
+            await self.decimal_dropdown.select_option(label="4 decimals")
+            print("4 decimals selected")
+
+            await self.decimal_dropdown.select_option(label="0 decimals")
+            print("Returned to 0 decimals")
+
+            print("Decimal dropdown validation completed")
+
+
+    async def create_new_sheet(self):
+        await self.sheet_button.wait_for(state="visible")
+        print("Sheet button is visible")
+
+        await self.sheet_button.click()
+        print("Sheet button clicked")
+
+        await self.sheet_name.wait_for(state="visible")
+        print("Create New Sheet dialog opened")
+
+        await self.sheet_name.fill("TestSheet")
+        print("Sheet name entered")
+
+        await self.copy_structure_dropdown.wait_for(state="visible")
+        await self.copy_structure_dropdown.select_option("PNL")
+        print("PNL selected")
+
+        await self.create_sheet_button.wait_for(state="visible")
+        await self.create_sheet_button.click()
+
+        print("New Sheet Created successfully")
 
 
