@@ -8,6 +8,7 @@ class ModelBuilderPage:
 
         # Entering the company details and selecting the model is done in the open_tcs_model method.
         # The following are the locators for the elements on the Model Builder page.
+
         self.company_input = page.get_by_placeholder("Search or select company...")
         self.company_option = page.get_by_text("Tata Consultancy Services Ltd.",exact=True)
         self.load_existing_model_button = page.get_by_test_id("toolbar-load-existing-model")
@@ -158,6 +159,11 @@ class ModelBuilderPage:
             print(f"{sheet} selected")
         print("All sheets navigated successfully and returned to PNL")
 
+
+#reusable function used across multiple test cases to click a button and cancel the dialog that appears after clicking the button.
+#Since the dialog appears after clicking the button, we need to wait for the cancel button to be visible before clicking it.
+#The data is not being validated in the dialog, so we are just clicking the cancel button to close the dialog.
+
     async def click_button_and_cancel_dialog(self, button):
 
         await button.click()
@@ -168,6 +174,9 @@ class ModelBuilderPage:
         print("Cancel button is visible")
         await cancel_button.click()
         print("Cancel button clicked successfully")
+
+# Verification of the toolbar section in the TCS Model Builder page.
+# The following methods are used to verify the functionality of the buttons in the toolbar section.
 
     async def verify_save_model_dialog(self):
         await self.click_button_and_cancel_dialog(self.save_model_button)
@@ -187,6 +196,9 @@ class ModelBuilderPage:
     async def verify_reset_button_dialog(self):
         await self.click_button_and_cancel_dialog(self.reset_button_dialog)
         print("Reset button clicked")
+
+#The following method is used to verify the functionality of the toggle buttons in the toolbar section.
+# Perform the integrity , autosave and perform the split view and hide the model options.
 
     async def verify_toggle_buttons(self):
         await self.integrity_guard.wait_for(state="visible")
@@ -220,6 +232,10 @@ class ModelBuilderPage:
 
         print("All toggle controls verification completed")
 
+
+    #The following are the toolbar operations that can be done in the excel sheet to perform various operations on the data available in the
+    #balance sheet.
+    # Again in this scenario the data is not being manupulated and the click button and cancel operation is performed.
 
     async def verify_show_formulas_button(self):
         await self.show_formulas.wait_for(state="visible")
@@ -262,6 +278,9 @@ class ModelBuilderPage:
             print("Returned to 0 decimals")
 
             print("Decimal dropdown validation completed")
+
+# The below method is used to validate the decimal dropdown for 0 to 4 decimal points and again coming back to the 0th
+    # decimal place.
 
 
     async def create_new_sheet(self):

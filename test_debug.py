@@ -1,6 +1,6 @@
 import pytest
+
 from login_page import LoginPage
-from dashboard_page import DashboardPage
 
 
 @pytest.mark.asyncio
@@ -8,7 +8,7 @@ async def test_debug(page):
     login_page = LoginPage(page)
     await login_page.open_login_page()
     await login_page.login("automation_tester_2", "lab$autoTester")
-    print("✅ Login successful")
+    print("Login successful")
 
     await page.screenshot(path="1_dashboard.png")
     print("📸 Screenshot: 1_dashboard.png")
@@ -24,3 +24,4 @@ async def test_debug(page):
     print(f"Found '.nav-link.active-page-nav': {class_count} times")
 
     await page.wait_for_timeout(2000)
+    

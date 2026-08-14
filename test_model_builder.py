@@ -138,13 +138,13 @@ async def test_tc21_verify_row_num_button(model_builder_page):
     print("TC21 completed")
 
 @pytest.mark.asyncio
-async def test_tc23_verify_decimal_dropdown(model_builder_page):
+async def test_tc22_verify_decimal_dropdown(model_builder_page):
     await model_builder_page.verify_decimal_dropdown()
     print("TC22 completed")
 
 
 @pytest.mark.asyncio
-async def test_tc22_create_new_sheet(model_builder_page):
+async def test_tc23_create_new_sheet(model_builder_page):
     await model_builder_page.create_new_sheet()
-    print("TC22 completed")
+    print("TC23 completed")
 
